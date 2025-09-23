@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body{
+            background-color: rgba(0, 0, 0, 0.17);
+        }
+        h1{
+            text-decoration: underline;
+            margin-top: 50px;
+            text-align: center;
+            font-family: cursive;
+            color: rgba(0, 0, 0, 0.671);
+        }
+        .todo-container {
+            width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.162);
+        }
+
+        #todo-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        #add-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .todo-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .remove-btn {
+            float: right;
+            padding: 5px 10px;
+            font-size: 15px;
+            border-style: none;
+            border-radius: 5px;
+            background-color: #f44336;
+            color: #fff;
+            cursor: pointer;
+        }
+        .remove-btn:hover{
+            background-color: #f44336bb;
+        }
+    </style>
+</head>
+<body>
+     <h1>To-Do App</h1>
+     <div class="todo-container">
+        <input type="text" id="todo-input" placeholder="Enter task">
+        <button id="add-btn">Add</button>
+        <ul id="todo-list"></ul>
+     </div>
+
+    <script>
+        const todoInput = document.getElementById('todo-input');
+        const addBtn = document.getElementById('add-btn');
+        const todoList = document.getElementById('todo-list');
+
+        addBtn.addEventListener('click', addTask);
+
+        function addTask() {
+            const task = todoInput.value.trim();
+            if (task) {
+                const todoItem = document.createElement('li');
+                todoItem.classList.add('todo-item');
+                todoItem.innerHTML = `
+                    <span>${task}</span>
+                    <button class="remove-btn">Remove</button>
+                `;
+                todoList.appendChild(todoItem);
+                todoInput.value = '';
+
+                // Add event listener to mark task complete
+                todoItem.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'BUTTON') {
+                        todoItem.classList.toggle('completed');
+                    }
+                });
+
+                // Add event listener to remove task
+                const removeBtn = todoItem.querySelector('.remove-btn');
+                removeBtn.addEventListener('click', () => {
+                    todoItem.remove();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
